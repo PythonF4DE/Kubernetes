@@ -1,0 +1,13 @@
+# Deleting kube-flannel CNI
+kubectl -n kube-flannel delete daemonset kube-flannel-ds
+kubectl -n kube-flannel delete configmap kube-flannel-cfg
+rm -rf /etc/cni/net.d/10-flannel.conflist
+
+
+# Installing Callico CNI plugin
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.5/manifests/operator-crds.yaml
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.5/manifests/tigera-operator.yaml
+curl -O https://raw.githubusercontent.com/projectcalico/calico/v3.31.5/manifests/custom-resources.yaml
+# First I make necessary changes to manifest file and only then I apply it
+kubectl create -f custom-resources.yaml
+watch kubectl get tigerastatus

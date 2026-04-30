@@ -1,0 +1,28 @@
+# kubectl label nodes <node-name> <label-key>=<label-value>
+# Example: kubectl label nodes node01 size=large
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+  - name: data-processor
+    image: data-processor
+  affinity:
+    nodeAffinity: 
+      requiredDuringSchedulingIgnoredDuringExecution: # can also be preferredDuringSchedulingIgnoredDuringExecution
+      # if required is used then if no fitting node exists, pod will not be scheduled. If used preferred then if no fitting node exists, pods will be scheduled to another node.
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: size
+            operator: In
+            values:
+            - Large
+            - Medium
+            # Places pods on nodes with size=Large or size=Medium tag
+          # - key: size
+          #   operator: NotIn
+          #   values:
+          #   - Small
+          #  Places pods on anything but nodes tagged with size=Small tag

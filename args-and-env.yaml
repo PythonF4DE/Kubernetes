@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: Demo-Pod
+  labels:
+    app: nginx
+    tier: something
+spec:
+  containers:
+    - name: First-Container
+      image: nginx
+      commands:
+        - "command1"
+        - "command2"
+      args: ["arg1", "arg2"]
+      env:
+        - name: APP_COLOR
+          value: pink
+          # To specify a value from a config map or a secret key
+          # valueFrom:
+          #   configMapKeyRef:
+          #   secretKeyRef:

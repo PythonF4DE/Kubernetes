@@ -1,0 +1,22 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 10000000
+description: "Priority class for mission critical pods"
+globalDefault: true # Makes it a default prriority for newly created workloads
+preemptionPolicy: PreemptLowerPriority # Evicts lower priority classes if cant be scheduled otherwise, PreemptLowerPolicy is also a default value can also be never (does not kill other existing pods)
+
+# Then we define the class that pod will use
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: Demo-Pod
+#   labels:
+#     app: nginx
+#     tier: something
+# spec:
+#   containers:
+#     - name: First-Container
+#       image: nginx
+#   priorityClassName: high-priority

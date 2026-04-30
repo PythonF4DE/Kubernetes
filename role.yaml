@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: developer
+rules:
+- apiGroups: [""] # It is empty because pods are in api v1, if, for example, I was dealing with deployments then we would have "apps" in here as deployments are a part of "apps/v1" api group
+  resources: ["pods"]
+  verbs: ["list", "get", "create", "update", "delete"]
+  # resourceNames: ["blue", "orange"] - access is limited to pods with mentioned names
+- apiGroups: [""]
+  resources: ["ConfigMap"]
+  verbs: ["create"]

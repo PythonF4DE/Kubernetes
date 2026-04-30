@@ -1,0 +1,22 @@
+# Is a default behaviour for all objects created
+# Is applied at namespace level for objects that are to be created, does not apply to already created objects
+
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-resource-constraint
+spec:
+  limits:
+  - default:
+      cpu: 500m
+      memory: 1Gi
+    defaultRequest:
+      cpu: 500m
+      memory: 1Gi
+    max:
+      cpu: "1"
+      memory: 1Gi
+    min:
+      cpu": "100m"
+      memory: 500Mi
+    type: Container # Type of object to be applied to

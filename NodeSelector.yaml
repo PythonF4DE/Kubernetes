@@ -1,0 +1,13 @@
+# kubectl label nodes <node-name> <label-key>=<label-value>
+# Example: kubectl label nodes node01 size=large
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+  - name: data-processor
+    image: data-processor
+  nodeSelector:
+    size: large # Node's label

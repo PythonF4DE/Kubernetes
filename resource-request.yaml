@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: Demo-Pod
+  labels:
+    app: nginx
+    tier: something
+spec:
+  containers:
+    - name: First-Container
+      image: nginx
+      resources:
+        requests: #  Makes sure a specified amount of resources is guaranteed
+          memory: "1Gi"
+          cpu: 1
+        limits: # Makes sure container does not eat more than set, if container tries using more CPU than its limit, it will be throttled, if it tries using more than allowed memory, it will be terminated with Out Of Memory (OOM) error
+          memory: "2Gi"
+          cpu: 2
