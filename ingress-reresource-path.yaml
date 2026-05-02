@@ -1,0 +1,75 @@
+# For my-online-store.com/watch and my-online-store.com/wear
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-wear-watch
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /wear
+        backend:
+          service:
+            name: wear-service
+            port:
+              number: 80
+      - path: /watch
+        backend:
+          service:
+            name: watch-service
+            port:
+              number: 80
+
+# For watch.my-online-store.com and wear.my-online-store.com
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-wear-watch
+spec:
+  rules:
+  - host: wear.my-online-store.com
+    http:
+      paths:
+      - path: /wear
+        backend:
+          service:
+            name: wear-service
+            port: 
+              number: 80
+  - host: watch.my-online-store.com
+    http:
+      paths:
+      - path: /watch
+        backend:
+          service:
+            name: watch-service
+            port:
+              number: 80
+
+# Another example of ingress resource
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-app-ingress
+  namespace: webapp
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - app.kodekloud.local
+    secretName: app-tls
+  rules:
+  - host: app.kodekloud.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-app
+            port:
+              number: 80
